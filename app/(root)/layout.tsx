@@ -24,8 +24,8 @@ export default function RootLayout({
 			<html lang="en">
 				<body className={inter.className}>
 					<Topbar />
-					<UserButton afterSignOutUrl="/" />
-					<main>
+
+					<main className="flex">
 						<LeftSidebar />
 						<section className="main-container">
 							layout
