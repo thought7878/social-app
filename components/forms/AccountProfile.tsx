@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import {
 	Form,
 	FormControl,
@@ -33,6 +33,8 @@ interface IAccountProfile {
 }
 
 const AccountProfile = ({ user, btnTitle }: IAccountProfile) => {
+	const [files, setFiles] = useState<File[]>([]);
+
 	const form = useForm({
 		resolver: zodResolver(UserValidation),
 		defaultValues: {
@@ -44,10 +46,26 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfile) => {
 	});
 
 	const handleImage = (
-		e: ChangeEvent,
+		e: ChangeEvent<HTMLInputElement>,
 		fieldChange: (value: string) => void
 	) => {
 		e.preventDefault();
+
+		const fileReader = new FileReader();
+
+		if (e.target.files && e.target.files?.length > 0) {
+			const file = e.target.files[0];
+			setFiles(Array.from(e.target.files));
+			if (!file.type.includes("image")) return;
+
+			fileReader.onload = (event) => {
+				const imageUrl =
+					(event.target?.result && event.target?.result.toString()) || "";
+				fieldChange(imageUrl);
+			};
+
+			fileReader.readAsDataURL(file);
+		}
 	};
 
 	function onSubmit(values: z.infer<typeof UserValidation>) {
