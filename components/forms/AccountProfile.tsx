@@ -19,6 +19,8 @@ import { UserValidation } from "../../lib/validations/user";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { Textarea } from "../ui/textarea";
+import { isBase64Image } from "../../lib/utils";
+import { useUploadThing } from "@/lib/uploadthing";
 
 interface IAccountProfile {
 	user: {
@@ -34,6 +36,7 @@ interface IAccountProfile {
 
 const AccountProfile = ({ user, btnTitle }: IAccountProfile) => {
 	const [files, setFiles] = useState<File[]>([]);
+	const { startUpload } = useUploadThing("media");
 
 	const form = useForm({
 		resolver: zodResolver(UserValidation),
@@ -67,9 +70,22 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfile) => {
 			fileReader.readAsDataURL(file);
 		}
 	};
+	/**
+	 * update user info
+	 * @param values user information
+	 */
+	async function onSubmit(values: z.infer<typeof UserValidation>) {
+		const blob = values.profile_photo;
+		const hasImageChanged = isBase64Image(blob);
 
-	function onSubmit(values: z.infer<typeof UserValidation>) {
-		console.log(values);
+		if (hasImageChanged) {
+			const imgRes = await startUpload(files);
+			if (imgRes && imgRes[0].url) {
+				// 不用关心setState
+				values.profile_photo = imgRes[0].url;
+			}
+		}
+		// TODO: update user profile
 	}
 
 	return (
