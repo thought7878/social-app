@@ -21,6 +21,8 @@ import Image from "next/image";
 import { Textarea } from "../ui/textarea";
 import { isBase64Image } from "../../lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
+import { updateUser } from "../../lib/actions/user";
+import { usePathname, useRouter } from "next/navigation";
 
 interface IAccountProfile {
 	user: {
@@ -37,6 +39,8 @@ interface IAccountProfile {
 const AccountProfile = ({ user, btnTitle }: IAccountProfile) => {
 	const [files, setFiles] = useState<File[]>([]);
 	const { startUpload } = useUploadThing("media");
+	const router = useRouter();
+	const pathname = usePathname();
 
 	const form = useForm({
 		resolver: zodResolver(UserValidation),
@@ -70,6 +74,7 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfile) => {
 			fileReader.readAsDataURL(file);
 		}
 	};
+
 	/**
 	 * update user info
 	 * @param values user information
@@ -85,7 +90,23 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfile) => {
 				values.profile_photo = imgRes[0].url;
 			}
 		}
-		// TODO: update user profile
+
+		// update user profile
+		await updateUser({
+			userId: user.id as string,
+			username: values.username,
+			name: values.name,
+			bio: values.bio,
+			image: values.profile_photo,
+			path: pathname,
+		});
+
+		// success
+		if (pathname === "/profile/edit") {
+			router.back();
+		} else {
+			router.push("/");
+		}
 	}
 
 	return (
