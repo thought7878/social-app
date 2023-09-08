@@ -149,6 +149,7 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfile) => {
 									onChange={(e) => handleImage(e, field.onChange)}
 								/>
 							</FormControl>
+							<FormMessage />
 						</FormItem>
 					)}
 				/>
@@ -167,6 +168,7 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfile) => {
 									{...field}
 								/>
 							</FormControl>
+							<FormMessage />
 						</FormItem>
 					)}
 				/>
@@ -185,6 +187,7 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfile) => {
 									{...field}
 								/>
 							</FormControl>
+							<FormMessage />
 						</FormItem>
 					)}
 				/>
@@ -203,6 +206,7 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfile) => {
 									{...field}
 								/>
 							</FormControl>
+							<FormMessage />
 						</FormItem>
 					)}
 				/>
