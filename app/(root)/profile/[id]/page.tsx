@@ -20,6 +20,8 @@ const Page = async ({ params }: { params: { id: string } }) => {
 				imgUrl={user.image}
 				bio={user.bio}
 			/>
+
+			<div></div>
 		</section>
 	);
 };

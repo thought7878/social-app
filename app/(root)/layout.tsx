@@ -28,7 +28,6 @@ export default function RootLayout({
 					<main className="flex text-light-1">
 						<LeftSidebar />
 						<section className="main-container">
-							layout
 							<div className="w-full max-w-4xl">{children}</div>
 						</section>
 						<RightSidebar />
