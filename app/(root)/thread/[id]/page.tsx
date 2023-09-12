@@ -3,6 +3,7 @@ import ThreadCard from "../../../../components/cards/ThreadCard";
 import { fetchUser } from "../../../../lib/actions/user";
 import { redirect } from "next/navigation";
 import { fetchThreadById } from "../../../../lib/actions/thread";
+import Comment from "@/components/forms/Comment";
 
 const Page = async ({ params }: { params: { id: string } }) => {
 	if (!params.id) return null;
@@ -27,6 +28,17 @@ const Page = async ({ params }: { params: { id: string } }) => {
 				createdAt={thread.createdAt}
 				comments={thread.children}
 			/>
+
+			{/* comments start */}
+			<div className="mt-7">
+				<Comment
+					threadId={thread._id.toString()}
+					// threadId={JSON.stringify(thread._id)}
+					userImg={user.imageUrl}
+					userId={userInfo._id.toString()}
+				/>
+			</div>
+			{/* comments end */}
 		</section>
 	);
 };

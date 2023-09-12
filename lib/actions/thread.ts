@@ -99,4 +99,33 @@ async function fetchThreadById(id: string) {
 	}
 }
 
-export { createThread, fetchThreads, fetchThreadById };
+async function createComment(
+	text: string,
+	parentId: string,
+	userId: string,
+	path: string
+) {
+	try {
+		connectToDB();
+
+		const originalThread = await Thread.findById(parentId);
+		if (!originalThread) throw new Error("Thread not found");
+
+		// const newComment = await Thread.create({
+		// 	text,
+		// 	author: userId,
+		// 	parentId,
+		// });
+		const comment = new Thread({ text, author: userId, parentId });
+		const newComment = await comment.save();
+
+		originalThread.children.push(newComment._id);
+		await originalThread.save();
+
+		revalidatePath(path);
+	} catch (error: any) {
+		throw new Error(`Failed to create commnent: ${error.message}`);
+	}
+}
+
+export { createThread, fetchThreads, fetchThreadById, createComment };

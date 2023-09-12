@@ -13,7 +13,6 @@ import {
 	FormMessage,
 } from "../ui/form";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { createThread } from "../../lib/actions/thread";
 import { z } from "zod";
