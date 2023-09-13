@@ -39,7 +39,6 @@ const ThreadsTab = async ({ clerkUserId, userId, accountType }: Props) => {
 						community={thread.community}
 						createdAt={thread.createdAt}
 						comments={thread.children}
-						isComment
 					/>
 				);
 			})}
