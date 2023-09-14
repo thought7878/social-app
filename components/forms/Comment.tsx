@@ -1,20 +1,20 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { usePathname, useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { CommentValidation } from "../../lib/validations/thread";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { z } from "zod";
+import { CommentValidation } from "../../lib/validations/thread";
 import Image from "next/image";
+import { Input } from "../ui/input";
 import { createComment } from "../../lib/actions/thread";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface IComment {
 	threadId: string;
-	userImg: string;
+	userImg?: string;
 	userId: string;
 }
 

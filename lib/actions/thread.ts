@@ -1,14 +1,15 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import Community from "../models/community";
 import Thread from "../models/thread";
+import { Types } from "mongoose";
 import User from "../models/user";
 import { connectToDB } from "../mongoose";
-import Community from "../models/community";
+import { revalidatePath } from "next/cache";
 
 interface Params {
 	text: string;
-	author: string;
+	author: Types.ObjectId;
 	communityId: string | null;
 	path: string;
 }

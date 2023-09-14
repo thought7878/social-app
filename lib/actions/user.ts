@@ -1,10 +1,12 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import User from "../models/user";
-import { connectToDB } from "../mongoose";
+import { FilterQuery, Types } from "mongoose";
+
 import Thread from "../models/thread";
-import { FilterQuery } from "mongoose";
+import User from "../models/user";
+import { UserType } from "../types/UserType";
+import { connectToDB } from "../mongoose";
+import { revalidatePath } from "next/cache";
 
 interface UserParams {
 	userId: string;
@@ -52,11 +54,12 @@ export async function fetchUser(userId: string) {
 	try {
 		connectToDB();
 
-		return await User.findOne({ id: userId });
+		const user = await User.findOne<UserType>({ id: userId });
 		// .populate({
 		// path: "communities",
 		// model: Community,
 		// });
+		return user;
 	} catch (error: any) {
 		throw new Error(`Failed to fetch user ${error.message}`);
 	}
@@ -65,7 +68,7 @@ export async function fetchUser(userId: string) {
 export async function fetchThreadsByUserId(userId: string) {
 	try {
 		connectToDB();
-		const threads = await User.findOne({ id: userId })
+		const result = await User.findOne({ id: userId })
 			.populate({
 				path: "threads",
 				model: Thread,
@@ -87,7 +90,7 @@ export async function fetchThreadsByUserId(userId: string) {
 				],
 			})
 			.exec();
-		return threads;
+		return result;
 	} catch (error: any) {
 		console.log(`Failed to fetch threads by user id:${error.message}`);
 	}
@@ -134,7 +137,7 @@ export async function fetchUsers({
 	}
 }
 
-export async function fetchActivity(userId: string) {
+export async function fetchActivity(userId: Types.ObjectId) {
 	try {
 		connectToDB();
 

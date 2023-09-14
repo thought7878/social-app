@@ -18,13 +18,13 @@ const Page = async ({ params }: { params: { id: string } }) => {
 	if (!clerkUser) return null;
 
 	const user = await fetchUser(params.id);
-	if (!user.onboarded) return redirect("/onboarding");
+	if (!user?.onboarded) return redirect("/onboarding");
 
 	return (
 		<section>
 			<ProfileHeader
-				name={user.name}
-				username={user.username}
+				name={user.name!}
+				username={user.username!}
 				imgUrl={user.image}
 				bio={user.bio}
 			/>
@@ -46,7 +46,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
 									{tab.label === "Threads" && (
 										<p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
-											{user.threads.length}
+											{user.threads?.length}
 										</p>
 									)}
 								</TabsTrigger>
@@ -60,7 +60,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 								className="w-full"
 								key={`content-${tab.label}`}
 							>
-								<ThreadList userId={user.id} type="User" />
+								<ThreadList userId={user.id!} type="User" />
 							</TabsContent>
 						);
 					})}

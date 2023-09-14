@@ -1,9 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { usePathname, useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { ThreadValidation } from "../../lib/validations/thread";
 import {
 	Form,
 	FormControl,
@@ -12,13 +8,19 @@ import {
 	FormLabel,
 	FormMessage,
 } from "../ui/form";
+import { usePathname, useRouter } from "next/navigation";
+
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import { ThreadValidation } from "../../lib/validations/thread";
+import { Types } from "mongoose";
 import { createThread } from "../../lib/actions/thread";
-import { z } from "zod";
+import { useForm } from "react-hook-form";
 import { useOrganization } from "@clerk/nextjs";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-function PostThread({ userId }: { userId: string }) {
+function PostThread({ userId }: { userId: Types.ObjectId }) {
 	const router = useRouter();
 	const pathname = usePathname();
 	const { organization } = useOrganization();
@@ -27,7 +29,7 @@ function PostThread({ userId }: { userId: string }) {
 		resolver: zodResolver(ThreadValidation),
 		defaultValues: {
 			thread: "",
-			accountId: userId,
+			accountId: userId.toString(),
 		},
 	});
 
