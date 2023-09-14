@@ -7,7 +7,7 @@ import {
 
 import Image from "next/image";
 import ProfileHeader from "../../../../components/shared/ProfileHeader";
-import ThreadsTab from "../../../../components/shared/ThreadsTab";
+import ThreadList from "../../../../components/shared/ThreadList";
 import UserCard from "../../../../components/cards/UserCard";
 import { communityTabs } from "../../../../constants";
 import { currentUser } from "@clerk/nextjs";
@@ -54,11 +54,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 						})}
 					</TabsList>
 					<TabsContent value="threads" className="w-full">
-						<ThreadsTab
-							clerkUserId={clerkUser.id}
-							userId={community._id}
-							accountType="Community"
-						/>
+						<ThreadList userId={community._id} type="Community" />
 					</TabsContent>
 					<TabsContent value="members" className="w-full">
 						<section>
@@ -77,11 +73,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 						</section>
 					</TabsContent>
 					<TabsContent value="requests" className="w-full">
-						<ThreadsTab
-							clerkUserId={clerkUser.id}
-							userId={community._id}
-							accountType="Community"
-						/>
+						<ThreadList userId={community._id} type="Community" />
 					</TabsContent>
 				</Tabs>
 			</div>

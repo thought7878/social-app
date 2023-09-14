@@ -7,7 +7,7 @@ import {
 
 import Image from "next/image";
 import ProfileHeader from "../../../../components/shared/ProfileHeader";
-import ThreadsTab from "../../../../components/shared/ThreadsTab";
+import ThreadList from "../../../../components/shared/ThreadList";
 import { currentUser } from "@clerk/nextjs";
 import { fetchUser } from "../../../../lib/actions/user";
 import { profileTabs } from "../../../../constants";
@@ -60,11 +60,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 								className="w-full"
 								key={`content-${tab.label}`}
 							>
-								<ThreadsTab
-									clerkUserId={clerkUser.id}
-									userId={user.id}
-									accountType="User"
-								/>
+								<ThreadList userId={user.id} type="User" />
 							</TabsContent>
 						);
 					})}

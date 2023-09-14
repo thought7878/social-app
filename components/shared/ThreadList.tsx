@@ -1,19 +1,18 @@
 import React from "react";
-import { fetchThreadsByUserId } from "../../lib/actions/user";
-import { redirect } from "next/navigation";
 import ThreadCard from "../cards/ThreadCard";
 import { fetchCommunityThreads } from "../../lib/actions/community";
+import { fetchThreadsByUserId } from "../../lib/actions/user";
+import { redirect } from "next/navigation";
 
 interface Props {
-	clerkUserId: string;
 	userId: string;
-	accountType: string;
+	type: string;
 }
 
-const ThreadsTab = async ({ clerkUserId, userId, accountType }: Props) => {
+const ThreadList = async ({ userId, type }: Props) => {
 	let result: any;
 
-	if (accountType === "Community") {
+	if (type === "Community") {
 		result = await fetchCommunityThreads(userId);
 	} else {
 		result = await fetchThreadsByUserId(userId);
@@ -32,7 +31,7 @@ const ThreadsTab = async ({ clerkUserId, userId, accountType }: Props) => {
 						parentId={thread.parentId}
 						content={thread.text}
 						author={
-							accountType === "User"
+							type === "User"
 								? {
 										name: result.name,
 										image: result.image,
@@ -54,4 +53,4 @@ const ThreadsTab = async ({ clerkUserId, userId, accountType }: Props) => {
 	);
 };
 
-export default ThreadsTab;
+export default ThreadList;
