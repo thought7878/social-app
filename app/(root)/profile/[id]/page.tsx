@@ -1,16 +1,17 @@
-import { currentUser } from "@clerk/nextjs";
-import { fetchUser } from "../../../../lib/actions/user";
-import { redirect } from "next/navigation";
-import ProfileHeader from "../../../../components/shared/ProfileHeader";
 import {
 	Tabs,
 	TabsContent,
 	TabsList,
 	TabsTrigger,
 } from "../../../../components/ui/tabs";
-import { profileTabs } from "../../../../constants";
+
 import Image from "next/image";
+import ProfileHeader from "../../../../components/shared/ProfileHeader";
 import ThreadsTab from "../../../../components/shared/ThreadsTab";
+import { currentUser } from "@clerk/nextjs";
+import { fetchUser } from "../../../../lib/actions/user";
+import { profileTabs } from "../../../../constants";
+import { redirect } from "next/navigation";
 
 const Page = async ({ params }: { params: { id: string } }) => {
 	const clerkUser = await currentUser();
@@ -22,8 +23,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
 	return (
 		<section>
 			<ProfileHeader
-				userId={user.id}
-				clerkUserId={clerkUser.id}
 				name={user.name}
 				username={user.username}
 				imgUrl={user.image}

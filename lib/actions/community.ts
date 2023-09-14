@@ -5,7 +5,6 @@ import { FilterQuery, SortOrder } from "mongoose";
 import Community from "../models/community";
 import Thread from "../models/thread";
 import User from "../models/user";
-
 import { connectToDB } from "../mongoose";
 
 export async function createCommunity(
@@ -53,7 +52,7 @@ export async function fetchCommunityById(id: string) {
 	try {
 		connectToDB();
 
-		const communityDetails = await Community.findOne({ id }).populate([
+		const communityDetails = await Community.findOne({ _id: id }).populate([
 			"createdBy",
 			{
 				path: "members",

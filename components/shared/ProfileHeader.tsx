@@ -2,8 +2,6 @@ import Image from "next/image";
 import React from "react";
 
 interface Props {
-	userId: string;
-	clerkUserId: string;
 	name: string;
 	username: string;
 	imgUrl?: string;
@@ -11,15 +9,7 @@ interface Props {
 	type?: "User" | "Community";
 }
 
-const ProfileHeader = ({
-	userId,
-	clerkUserId,
-	name,
-	username,
-	imgUrl,
-	bio,
-	type,
-}: Props) => {
+const ProfileHeader = ({ name, username, imgUrl, bio, type }: Props) => {
 	return (
 		<>
 			<div className="flex items-center mb-6">

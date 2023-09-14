@@ -1,16 +1,17 @@
-import { currentUser } from "@clerk/nextjs";
-import ProfileHeader from "../../../../components/shared/ProfileHeader";
 import {
 	Tabs,
 	TabsContent,
 	TabsList,
 	TabsTrigger,
 } from "../../../../components/ui/tabs";
-import { communityTabs } from "../../../../constants";
+
 import Image from "next/image";
+import ProfileHeader from "../../../../components/shared/ProfileHeader";
 import ThreadsTab from "../../../../components/shared/ThreadsTab";
-import { fetchCommunityById } from "../../../../lib/actions/community";
 import UserCard from "../../../../components/cards/UserCard";
+import { communityTabs } from "../../../../constants";
+import { currentUser } from "@clerk/nextjs";
+import { fetchCommunityById } from "../../../../lib/actions/community";
 
 const Page = async ({ params }: { params: { id: string } }) => {
 	const clerkUser = await currentUser();
@@ -21,8 +22,6 @@ const Page = async ({ params }: { params: { id: string } }) => {
 	return (
 		<section>
 			<ProfileHeader
-				userId={community.id}
-				clerkUserId={clerkUser.id}
 				name={community.name}
 				username={community.username}
 				imgUrl={community.image}
@@ -57,7 +56,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 					<TabsContent value="threads" className="w-full">
 						<ThreadsTab
 							clerkUserId={clerkUser.id}
-							userId={community.id}
+							userId={community._id}
 							accountType="Community"
 						/>
 					</TabsContent>
@@ -80,7 +79,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 					<TabsContent value="requests" className="w-full">
 						<ThreadsTab
 							clerkUserId={clerkUser.id}
-							userId={community.id}
+							userId={community._id}
 							accountType="Community"
 						/>
 					</TabsContent>
