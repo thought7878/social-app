@@ -2,6 +2,7 @@ import React from "react";
 import { fetchThreadsByUserId } from "../../lib/actions/user";
 import { redirect } from "next/navigation";
 import ThreadCard from "../cards/ThreadCard";
+import { fetchCommunityThreads } from "../../lib/actions/community";
 
 interface Props {
 	clerkUserId: string;
@@ -10,12 +11,19 @@ interface Props {
 }
 
 const ThreadsTab = async ({ clerkUserId, userId, accountType }: Props) => {
-	const userResult: any = await fetchThreadsByUserId(userId);
-	if (!userResult) return redirect("/");
+	let result: any;
+
+	if (accountType === "Community") {
+		result = await fetchCommunityThreads(userId);
+	} else {
+		result = await fetchThreadsByUserId(userId);
+	}
+
+	if (!result) return redirect("/");
 
 	return (
 		<section>
-			{userResult.threads?.map((thread: any) => {
+			{result.threads?.map((thread: any) => {
 				return (
 					<ThreadCard
 						key={thread._id}
@@ -26,9 +34,9 @@ const ThreadsTab = async ({ clerkUserId, userId, accountType }: Props) => {
 						author={
 							accountType === "User"
 								? {
-										name: userResult.name,
-										image: userResult.image,
-										id: userResult.id,
+										name: result.name,
+										image: result.image,
+										id: result.id,
 								  }
 								: {
 										name: thread.author.name,
