@@ -30,7 +30,12 @@ const Comment = ({ threadId, userImg, userId }: IComment) => {
 	});
 
 	const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
-		await createComment(values.thread, threadId, userId, pathname);
+		await createComment(
+			values.thread,
+			threadId as string,
+			userId as string,
+			pathname
+		);
 		form.reset();
 	};
 

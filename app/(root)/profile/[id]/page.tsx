@@ -23,14 +23,15 @@ const Page = async ({ params }: { params: { id: string } }) => {
 	return (
 		<section>
 			<ProfileHeader
-				name={user.name!}
-				username={user.username!}
+				name={user.name as string}
+				username={user.username as string}
 				imgUrl={user.image}
 				bio={user.bio}
 			/>
 
 			<div className="mt-9">
 				<Tabs defaultValue="threads" className="w-full">
+					{/* tab header Start */}
 					<TabsList className="tab">
 						{profileTabs.map((tab) => {
 							return (
@@ -42,6 +43,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 										height={24}
 										className="object-contain"
 									/>
+
 									<p className="max-sm:hidden">{tab.label}</p>
 
 									{tab.label === "Threads" && (
@@ -53,6 +55,9 @@ const Page = async ({ params }: { params: { id: string } }) => {
 							);
 						})}
 					</TabsList>
+					{/* tab header End */}
+
+					{/* tab content Start */}
 					{profileTabs.map((tab) => {
 						return (
 							<TabsContent
@@ -64,6 +69,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 							</TabsContent>
 						);
 					})}
+					{/* tab content End */}
 				</Tabs>
 			</div>
 		</section>
