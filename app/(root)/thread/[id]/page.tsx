@@ -19,21 +19,21 @@ const Page = async ({ params }: { params: { id: string } }) => {
 	return (
 		<section>
 			<ThreadCard
-				id={thread._id}
+				id={thread?._id}
 				userId={user?.id || ""}
-				parentId={thread.parentId}
-				content={thread.text}
-				author={thread.author}
-				community={thread.community}
-				createdAt={thread.createdAt}
-				comments={thread.children}
+				parentId={thread?.parentId}
+				content={thread?.text}
+				author={thread?.author}
+				community={thread?.community}
+				createdAt={thread?.createdAt}
+				comments={thread?.children}
 				isComment
 			/>
 
 			{/* comments Start */}
 			<div className="mt-7">
 				<Comment
-					threadId={thread._id.toString()}
+					threadId={thread?._id?.toString()}
 					// threadId={JSON.stringify(thread._id)}
 					userImg={userInfo.image}
 					userId={userInfo._id.toString()}
@@ -43,7 +43,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
 			{/* thread children Start */}
 			<div className="mt-10">
-				{thread.children.map((childThread: any) => {
+				{thread?.children?.map((childThread: any) => {
 					return (
 						<ThreadCard
 							key={childThread._id.toString()}

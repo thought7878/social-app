@@ -13,9 +13,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 interface IComment {
-	threadId: string;
+	threadId?: string;
 	userImg?: string;
-	userId: string;
+	userId?: string;
 }
 
 const Comment = ({ threadId, userImg, userId }: IComment) => {
@@ -44,7 +44,7 @@ const Comment = ({ threadId, userImg, userId }: IComment) => {
 						<FormItem className="flex items-center gap-3 w-full">
 							<FormLabel>
 								<Image
-									src={userImg}
+									src={userImg || ""}
 									alt="profile image"
 									width={48}
 									height={48}

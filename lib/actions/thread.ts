@@ -2,6 +2,7 @@
 
 import Community from "../models/community";
 import Thread from "../models/thread";
+import { ThreadType } from "../types/ThreadType";
 import { Types } from "mongoose";
 import User from "../models/user";
 import { connectToDB } from "../mongoose";
@@ -90,7 +91,7 @@ async function fetchThreads(pageNumber = 1, pageSize = 20) {
 async function fetchThreadById(id: string) {
 	try {
 		connectToDB();
-		return await Thread.findById(id)
+		return await Thread.findById<ThreadType>(id)
 			.populate({
 				path: "author",
 				model: User,

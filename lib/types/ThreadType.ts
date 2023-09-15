@@ -4,6 +4,7 @@ import { UserType } from "./UserType";
 
 export interface ThreadType {
 	_id?: Types.ObjectId;
+	text?: string;
 	author?: UserType;
 	community?: CommunityType;
 	createdAt?: Date;

@@ -1,5 +1,6 @@
 import React from "react";
 import ThreadCard from "../cards/ThreadCard";
+import { ThreadType } from "../../lib/types/ThreadType";
 import { fetchCommunityThreads } from "../../lib/actions/community";
 import { fetchThreadsByUserId } from "../../lib/actions/user";
 import { redirect } from "next/navigation";
@@ -38,14 +39,14 @@ const ThreadList = async ({ userId, type }: Props) => {
 										id: result.id,
 								  }
 								: {
-										name: thread.author.name,
-										image: thread.author.image,
-										id: thread.author.id,
+										name: thread?.author?.name,
+										image: thread?.author?.image,
+										id: thread?.author?.id,
 								  }
 						}
-						community={thread.community}
-						createdAt={thread.createdAt}
-						comments={thread.children}
+						community={thread?.community}
+						createdAt={thread?.createdAt}
+						comments={thread?.children}
 					/>
 				);
 			})}
